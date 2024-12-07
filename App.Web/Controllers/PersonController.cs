@@ -1,4 +1,6 @@
-﻿namespace App.Web.Controllers
+﻿using System.Data;
+
+namespace App.Web.Controllers
 {
     public class PersonController : BaseController
     {
@@ -24,7 +26,7 @@
             }
 
             //memoryCache.Set(CahceName, dataSet, TimeSpan.FromSeconds(30));
-
+            //TempData["msg"] = NotifyService.Success(dataSet.Count + " nos data loaded");
             return View(dataSet);
         }
 
@@ -50,6 +52,7 @@
                     person.Id = Guid.NewGuid().ToString();
                     _context.Person.Add(person);
                     CanSave = true;
+                    TempData["msg"] = NotifyService.Success("Successfully saved");
                 }
                 else
                 {
@@ -66,10 +69,12 @@
                         personEntity.PermanentAddress = person.PermanentAddress;
                         _context.Entry(personEntity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         CanSave = true;
+                        TempData["msg"] = NotifyService.Success("Successfully edited");
                     }
                     else
                     {
-                        ViewData["ErrorMessage"] = "Data not found or edit restricted";
+                        //ViewData["ErrorMessage"] = "Data not found or edit restricted";
+                        TempData["msg"] = NotifyService.Error("Data not found or edit restricted");
                         return View(person);
                     }
                 }
@@ -95,7 +100,12 @@
                 {
                     _context.Person.Remove(person);
                     _context.SaveChanges();
+                    TempData["msg"] = NotifyService.Success("Data Deleted");
                 }
+            }
+            else
+            {
+                TempData["msg"] = NotifyService.Error("Data is not found");
             }
             return RedirectToAction("Index");
         }

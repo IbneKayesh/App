@@ -6,9 +6,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("appDbConnection"));
+    //options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("appDbConnection"));
+    options.UseInMemoryDatabase("ApDBMemory");
 });
-
 
 var app = builder.Build();
 
