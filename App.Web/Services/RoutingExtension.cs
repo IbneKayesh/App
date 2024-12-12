@@ -2,19 +2,29 @@
 {
     public static class RoutingExtension
     {
-        public static IEndpointRouteBuilder AreaEndpointRouteBuilder(this IEndpointRouteBuilder builder)
+        public static IEndpointRouteBuilder AreaEndpointRouteBuilder(this IEndpointRouteBuilder endpointRoutebuilder)
         {
-            builder.MapAreaControllerRoute(
-                name: "AreaAdmin",
-                areaName: "Admin",
-                pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+            endpointRoutebuilder.MapAreaControllerRoute(
+                name: "AreaCRM",
+                areaName: "CRM",
+                pattern: "CRM/{controller=Home}/{action=Index}/{id?}");
 
-            builder.MapAreaControllerRoute(
-                name: "AreaVisitor",
-                areaName: "Visitor",
-                pattern: "Visitor/{controller=Home}/{action=Index}/{id?}");
+            endpointRoutebuilder.MapAreaControllerRoute(
+                name: "AreaPurchase",
+                areaName: "Purchase",
+                pattern: "Purchase/{controller=Home}/{action=Index}/{id?}");
 
-            return builder;
+            endpointRoutebuilder.MapAreaControllerRoute(
+                name: "AreaSales",
+                areaName: "Sales",
+                pattern: "Sales/{controller=Home}/{action=Index}/{id?}");
+
+            endpointRoutebuilder.MapAreaControllerRoute(
+                name: "AreaSetup",
+                areaName: "Setup",
+                pattern: "Setup/{controller=Home}/{action=Index}/{id?}");
+
+            return endpointRoutebuilder;
         }
     }
 }

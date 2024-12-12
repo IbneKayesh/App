@@ -2,6 +2,7 @@
 
 namespace App.Web.Areas.Setup.Controllers
 {
+    [Area("Setup")]
     public class BrandController : Controller
     {
         public IActionResult Index()
