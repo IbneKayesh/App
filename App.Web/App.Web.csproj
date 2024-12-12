@@ -10,6 +10,23 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\CRM\Data\" />
+    <Folder Include="Areas\CRM\Models\" />
+    <Folder Include="Areas\CRM\Views\" />
+    <Folder Include="Areas\Purchase\Controllers\" />
+    <Folder Include="Areas\Purchase\Data\" />
+    <Folder Include="Areas\Purchase\Models\" />
+    <Folder Include="Areas\Purchase\Views\" />
+    <Folder Include="Areas\Sales\Data\" />
+    <Folder Include="Areas\Sales\Models\" />
+    <Folder Include="Areas\Sales\Views\" />
+    <Folder Include="Areas\Setup\Data\" />
+    <Folder Include="Areas\Setup\Models\" />
+    <Folder Include="Areas\Setup\Views\" />
   </ItemGroup>
 
 </Project>

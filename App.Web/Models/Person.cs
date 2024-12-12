@@ -37,5 +37,6 @@
         [NotMapped]
 
         public string? FullAddress { get; set; }
+        //public byte[] timestamp { get; set; }
     }
 }
