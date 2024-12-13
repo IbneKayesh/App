@@ -33,6 +33,7 @@ app.UseAuthorization();
 //Areas Endpoint should be before Controller route
 app.AreaEndpointRouteBuilder();
 
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
