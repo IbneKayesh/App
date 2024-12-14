@@ -1,10 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.DBC
 {
@@ -16,6 +11,12 @@ namespace App.DBC
             _contextFactory = contextFactory;
         }
 
+        /// <summary>
+        /// Use for INSERT, UPDATE, DELETE command
+        /// </summary>
+        /// <param name="spName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public async Task<int> ExecuteSPNonQuery(string spName, params SqlParameter[] parameters)
         {
             string sqlParams = string.Join(", ", parameters.Select(s => $"@{s.ParameterName}"));
@@ -23,6 +24,14 @@ namespace App.DBC
             using var dbCtx = _contextFactory.CreateDbContext();
             return await dbCtx.Database.ExecuteSqlRawAsync(sqlCommand, parameters);
         }
+
+        /// <summary>
+        /// Use for SELECT query
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="spName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public async Task<List<T>> ExecuteSPQuery<T>(string spName, params SqlParameter[] parameters) where T : class
         {
             string sqlParams = string.Join(", ", parameters.Select(s => $"@{s.ParameterName}"));
@@ -30,8 +39,5 @@ namespace App.DBC
             using var dbCtx = _contextFactory.CreateDbContext();
             return await dbCtx.Set<T>().FromSqlRaw(sqlCommand, parameters).ToListAsync();
         }
-
-
-        //2 Method
     }
 }

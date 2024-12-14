@@ -2,6 +2,7 @@
 using App.DMO.Setup;
 using App.Infra.IServices;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace App.Infra.Services
 {
@@ -12,33 +13,57 @@ namespace App.Infra.Services
         {
             _rawSql = rawSql;
         }
-        public Task Add(BRAND entity)
+        public async Task Add(BRAND entity)
         {
-
-            List<object> parameterList = new List<object>();
-            parameterList.Add(new SqlParameter("@ID", "123"))
-                ;
-            throw new NotImplementedException();
+            await _rawSql.ExecuteSPNonQuery(
+               "SP_ManageBrand",
+               new SqlParameter("@Action", "CREATE"),
+               new SqlParameter("@ID", entity.ID),
+               new SqlParameter("@BRAND_NAME", entity.BRAND_NAME),
+               new SqlParameter("@BRAND_ORIGIN", entity.BRAND_ORIGIN)
+           );
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            await _rawSql.ExecuteSPNonQuery(
+                  "SP_ManageBrand",
+                  new SqlParameter("@Action", "DELETE"),
+                  new SqlParameter("@ID", id),
+                  new SqlParameter("@BRAND_NAME", DBNull.Value),
+                  new SqlParameter("@BRAND_ORIGIN", DBNull.Value)
+              );
         }
 
-        public Task Edit(BRAND entity)
+        public async Task Edit(BRAND entity)
         {
-            throw new NotImplementedException();
+            await _rawSql.ExecuteSPNonQuery(
+                 "SP_ManageBrand",
+                 new SqlParameter("@Action", "UPDATE"),
+                 new SqlParameter("@ID", entity.ID),
+                 new SqlParameter("@BRAND_NAME", entity.BRAND_NAME),
+                 new SqlParameter("@BRAND_ORIGIN", entity.BRAND_ORIGIN)
+             );
         }
 
-        public Task<IEnumerable<BRAND>> GetAll()
+        public async Task<IEnumerable<BRAND>> GetAll()
         {
-            throw new NotImplementedException();
+            var brands = await _rawSql.ExecuteSPQuery<BRAND>(
+                   "SP_ManageBrand",
+                   new SqlParameter("@Action", "GETALL")
+                   );
+            return brands;
         }
 
-        public Task<BRAND> GetById(string id)
+        public async Task<BRAND> GetById(string id)
         {
-            throw new NotImplementedException();
+            var brand = await _rawSql.ExecuteSPQuery<BRAND>("SP_ManageBrand",
+                 new SqlParameter("@Action", "GETBYID") { SqlDbType = SqlDbType.NVarChar },
+                 new SqlParameter("@ID", id) { SqlDbType = SqlDbType.NVarChar },
+                 new SqlParameter("@BRAND_NAME", DBNull.Value) { SqlDbType = SqlDbType.NVarChar },
+                 new SqlParameter("@BRAND_ORIGIN", DBNull.Value) { SqlDbType = SqlDbType.NVarChar }
+             );
+            return brand.FirstOrDefault();
         }
 
         public Task<IEnumerable<BRAND>> GetByName(string name)

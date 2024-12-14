@@ -1,3 +1,4 @@
+using App.DBC;
 using App.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     //options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("appDbConnection"));
-    options.UseInMemoryDatabase("ApDBMemory");
+    //options.UseInMemoryDatabase("ApDBMemory");
 });
 
 var app = builder.Build();
